@@ -1,0 +1,9 @@
+package ex03_DI;
+
+public class TestMain_nonDI {
+	public static void main(String[] args) {
+		// 생성자 이용 방법
+		MyProcess mp = new MyProcess("둘리", 23);
+		mp.prn();
+	}
+}

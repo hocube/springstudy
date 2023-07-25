@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 객체 생성 -->
+	<!-- OracleDAO oracleDAO = new OracleDAO(); => 자바식 객체 색성-->
+	
+	<!-- id로 해당 객체를 호출할 수 있다. -->
+	<!-- 객체를 만들 클래스의 위치 지정 -->
+	<bean id="oracleDAO" class="ex02_DI.OracleDAO" />
+	<bean id="mysqlDAO" class="ex02_DI.MySQLDAO" />
+	
+	<!-- 
+		<생성자 이용>
+		public Service(DAO dao) {
+			this.dao = dao;
+		}
+
+		<setter 이용>		
+		public void setDao(DAO dao) {
+			this.dao = dao;
+		}
+	 -->
+	 
+	 <!-- 의존성 주입 (DI) -->
+	 <bean id="service" class="ex02_DI.Service" />
+</beans>
