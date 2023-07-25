@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- 객체 생성 -->
+     <bean id="oracleDAO" class="ex05_Anotaion.OracleDAO" />
+     <bean id="mySQLDAO" class="ex05_Anotaion.MySQLDAO" />
+    
+    <!--의존성주입 (DI) -->
+       <!-- 먼저 만든 객체를 의존성 주입하기위해서 ref 속성(참조)를 사용한다. -->
+    <bean id="service" class="ex05_Anotaion.Service">
+		<property name="dao" ref="oracleDAO"></property>   
+    </bean> 
+    
+</beans>

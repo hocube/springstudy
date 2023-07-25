@@ -1,0 +1,11 @@
+package ex04_DI;
+
+public class Age {
+	public int count(String jumin, int gender) {
+		int result = 0;
+		// gender가 1 또는 2이면 1900년대생 태어남
+		// 		   3 또는 4이면 2000년대생 태어남
+		
+		return result;
+	}
+}

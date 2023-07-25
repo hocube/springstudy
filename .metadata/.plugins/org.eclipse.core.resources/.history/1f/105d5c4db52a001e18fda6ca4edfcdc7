@@ -1,0 +1,17 @@
+package ex05_Anotaion;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.GenericXmlApplicationContext;
+
+public class TestMain {
+	// ex01과는 다르다.
+	public static void main(String[] args) {
+
+		ApplicationContext context = 
+				new GenericXmlApplicationContext("ex05_DI/config.xml");
+		
+		Service service = (Service) context.getBean("service");
+		service.biz();
+
+	}
+}

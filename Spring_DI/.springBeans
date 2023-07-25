@@ -9,6 +9,8 @@
 	<configs>
 		<config>src/main/java/ex02_DI/config.xml</config>
 		<config>src/main/java/ex03_DI/config.xml</config>
+		<config>src/main/java/ex04_DI/config.xml</config>
+		<config>src/main/java/ex06_web_DI/config.xml</config>
 	</configs>
 	<autoconfigs>
 		<config>src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml</config>
