@@ -46,7 +46,7 @@
     
     	mc.minus(20, 10);
     	int result2 = mc.getResult();
-    	out.println("<h2> 결과 : 10 + 20 = " + result2 + "</h2>");
+    	out.println("<h2> 결과 : 20 - 10 = " + result2 + "</h2>");
     	pageContext.setAttribute("result2", result2);
     	
     	
