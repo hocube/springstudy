@@ -16,11 +16,18 @@
 		<context:component-scan base-package="ex09_db" /> -->
 	<!-- ex10 게스트북 하면서 어노테이션 해야해서 이부분 밑으로 뺐음 -->
 	
-	<!-- 오라클 연결 정보 -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<!-- 오라클 연결 정보 -->
+		<!-- 
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
 		<property name="username" value="c##pjh" />
+		<property name="password" value="1111" /> 
+		-->
+		<!-- 마리아 DB 연결 정보-->
+		<property name="driverClassName" value="org.mariadb.jdbc.Driver" />
+		<property name="url" value="jdbc:mariadb://localhost:3306/ictedu" />
+		<property name="username" value="pjh" />
 		<property name="password" value="1111" />
 	</bean>
 	
