@@ -1,8 +1,0 @@
-package ex06_web_DI;
-
-public class HelloImpl implements Hello {
-	@Override
-	public String sayHello() {
-		return "Hello Spring World";
-	}
-}

@@ -1,9 +1,0 @@
-package ex04_DI;
-
-public class Age {
-	public int count(String jumin, int gender) {
-		int result = 0;
-		
-		return result;
-	}
-}
