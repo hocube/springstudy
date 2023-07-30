@@ -1,5 +1,0 @@
-package ex03_DI;
-
-public class MyProcess {
-	private String name = "홍길동";
-}

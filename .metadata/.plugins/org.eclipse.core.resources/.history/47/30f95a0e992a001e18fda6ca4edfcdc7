@@ -1,7 +1,0 @@
-package ex02_DI;
-
-public class TestMain {
-	public static void main(String[] args) {
-		
-	}
-}
