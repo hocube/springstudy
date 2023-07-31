@@ -6,4 +6,17 @@
 	<select id="list" resultType="mvo">
 		select * from members
 	</select>
+	
+	<insert id="insert" parameterType="mvo">
+		insert into members(m_id, m_pw, m_name, 
+		<if test="m_age != null and m_age != ''">
+			m_age,
+		</if>
+		m_reg)
+		values(#{m_id}, #{m_pw}, #{m_name}, 
+		<if test="m_age != null and m_age != ''">
+			#{m_age},
+		</if>
+		SYSDATE())
+	</insert>
 </mapper>

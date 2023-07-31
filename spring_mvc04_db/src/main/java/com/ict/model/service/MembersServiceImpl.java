@@ -28,4 +28,10 @@ public class MembersServiceImpl implements MembersService{
 		List<MembersVO> list = getMembersDAO().membersList();
 		return list;
 	}
+	
+	@Override
+	public int memberAdd(MembersVO mvo) {
+		int result = membersDAO.memberAdd(mvo);
+		return result;
+	}
 }

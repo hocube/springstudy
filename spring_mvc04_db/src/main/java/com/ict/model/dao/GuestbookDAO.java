@@ -6,12 +6,12 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ict.model.vo.MembersVO;
+import com.ict.model.vo.GuestbookVO;
 
 @Repository
-public class MembersDAO {
+public class GuestbookDAO {
 
-	//실제 Mapper를 호출하는 클래스
+	// 실제 mapper를 호출하는 클래스
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 
@@ -23,17 +23,9 @@ public class MembersDAO {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 	
-	//Members 리스트
-	public List<MembersVO> membersList(){
-		List<MembersVO> list = sqlSessionTemplate.selectList("members.list");
+	//guestbook 리스트
+	public List<GuestbookVO> guestbookList() {
+		List<GuestbookVO> list = sqlSessionTemplate.selectList("guestbook.list");
 		return list;
 	}
-	
-	//Member 삽입
-	public int memberAdd(MembersVO mvo) {
-		int result = sqlSessionTemplate.insert("members.insert",mvo);
-		// sqlSessionTemplate는 autocommit이다.
-		return result;
-	}
-
 }
