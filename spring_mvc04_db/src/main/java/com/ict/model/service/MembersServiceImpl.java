@@ -25,7 +25,7 @@ public class MembersServiceImpl implements MembersService{
 
 	@Override
 	public List<MembersVO> membersList() {
-		List<MembersVO> list = membersDAO.membersList();
+		List<MembersVO> list = getMembersDAO().membersList();
 		return list;
 	}
 }

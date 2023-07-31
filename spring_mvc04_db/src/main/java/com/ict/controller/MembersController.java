@@ -31,4 +31,9 @@ public class MembersController {
 		mv.addObject("list", list);
 		return mv;
 	}
+	
+	@GetMapping("/members_addForm.do")
+	public ModelAndView getMemberAddForm() {
+		return new ModelAndView("members/addForm");
+	}
 }

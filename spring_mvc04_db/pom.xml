@@ -4,7 +4,7 @@
    <modelVersion>4.0.0</modelVersion>
    <groupId>com.ict</groupId>
    <artifactId>controller</artifactId>
-   <name>spring_mvc04</name>
+   <name>spring_mvc04_db</name>
    <packaging>war</packaging>
    <version>1.0.0-BUILD-SNAPSHOT</version>
    <properties>
