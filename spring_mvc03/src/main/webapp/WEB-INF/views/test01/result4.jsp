@@ -8,12 +8,16 @@
 </head>
 <body>
 	<h2>결과보기</h2>
-		<h1>
+		<h3>
 			<li> 올린사람: ${ name}</li>
 			<li> 파일이름: ${ f_name}</li>
 			<li> 파일타입: ${ f_type}</li>
-			<li> 파일사이즈: ${ size}</li>
-			<img src="resources/images/${f_name}" style="width: 150px;">
-		</h1>
+			<li> 파일사이즈: ${ size}KB</li>
+			<li> 
+				<a href="/down.do?f_name=${f_name}">
+					<img src="resources/images/${f_name}" style="width: 150px;">
+				</a>
+			</li>
+		</h3>
 </body>
 </html>
