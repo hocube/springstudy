@@ -6,4 +6,9 @@
 	<select id="list" resultType="gvo">
 		select * from guestbook
 	</select>
+	
+	<insert id="insert" parameterType="gvo">
+		insert into guestbook(name, subject, content, email, pwd, regdate)
+		values(#{name}, #{subject}, #{content}, #{email}, #{pwd}, SYSDATE())
+	</insert>
 </mapper>

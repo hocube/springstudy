@@ -11,7 +11,7 @@
 	</settings>
 	<typeAliases>
 		<typeAlias type="com.ict.model.vo.MembersVO" alias="mvo"/>
-		<typeAlias type="com.ict.model.vo.GuestbookVO" alias="gvo"/>
+		<typeAlias type="com.ict.model.vo.GuestBookVO" alias="gvo"/>
 	</typeAliases>
    <mappers>
       <mapper resource="mappers/members-mapper.xml" />

@@ -1,6 +1,6 @@
 package com.ict.model.vo;
 
-public class GuestbookVO {
+public class GuestBookVO {
 	private String idx, name, subject, content, email, pwd, regdate;
 
 	public String getIdx() {

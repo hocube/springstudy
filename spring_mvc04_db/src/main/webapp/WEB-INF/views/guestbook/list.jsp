@@ -26,7 +26,7 @@
 		<h2>방명록 리스트</h2>
 		<hr>
 		<p>
-			[<a href="/guestbook_write.do">방명록 쓰기</a>]
+			[<a href="/guestbookAddForm.do">방명록 쓰기</a>]
 		</p>
 		<table>
 			<thead>
@@ -39,13 +39,13 @@
 			</thead>
 			<tbody>
 				<c:choose>
-					<c:when test="${empty list}">
+					<c:when test="${empty glist}">
 						<tr>
 							<td colspan="4"><h2>원하는 정보가 존재하지 않습니다.</h2></td>
 						</tr>
 					</c:when>
 					<c:otherwise>
-						<c:forEach var="k" items="${list }" varStatus="vs">
+						<c:forEach var="k" items="${glist }" varStatus="vs">
 							<tr>
 								<td>${vs.count}</td>
 								<td>${k.name}</td>

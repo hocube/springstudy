@@ -10,7 +10,7 @@
 		location.href = "/members_list.do";
 	}
 	function go_guestbook() {
-		location.href = "/guestbook_list.do";
+		location.href = "/guestbook_list.do"; // '/'가 있으면 컨트롤러로 간다!
 	}
 	function go_guestbook2() {
 		location.href = "/guestbook2_list.do";

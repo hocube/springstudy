@@ -158,7 +158,18 @@
          <artifactId>commons-fileupload</artifactId>
          <version>1.5</version>
       </dependency>
-      
+      <!-- https://mvnrepository.com/artifact/com.servlets/cos -->
+		<dependency>
+			<groupId>com.servlets</groupId>
+			<artifactId>cos</artifactId>
+			<version>05Nov2002</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<dependency>
+    		<groupId>com.google.code.gson</groupId>
+    		<artifactId>gson</artifactId>
+    		<version>2.10.1</version>
+		</dependency>
       <!--db연동과 파일 업로드를위한 라이브러리들 끝. -->
    </dependencies>
     <build>

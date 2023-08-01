@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ict.model.service.MembersService;
-import com.ict.model.vo.GuestbookVO;
+import com.ict.model.vo.GuestBookVO;
 import com.ict.model.vo.MembersVO;
 
 @Controller
