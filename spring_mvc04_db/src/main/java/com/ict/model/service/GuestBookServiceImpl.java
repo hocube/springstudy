@@ -14,25 +14,10 @@ public class GuestBookServiceImpl implements GuestBookService{
 	@Autowired
 	private GuestBookDAO guestBookDAO;
 	
-	// getter, setter
-	public GuestBookDAO getGuestBookDAO() {
-		return guestBookDAO;
-	}
-
-	public void setGuestBookDAO(GuestBookDAO guestBookDAO) {
-		this.guestBookDAO = guestBookDAO;
-	}
-
 	// 전체 리스트
 	@Override
 	public List<GuestBookVO> getGuestBookList() {
 		return guestBookDAO.getGuestBookList();
-	}
-
-	@Override
-	public GuestBookVO getGuestBookOneList(String idx) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	// 삽입
@@ -40,16 +25,22 @@ public class GuestBookServiceImpl implements GuestBookService{
 	public int getGuestBookInsert(GuestBookVO gvo) {
 		return guestBookDAO.getGuestBookInsert(gvo);
 	}
-
+	
+	// 상세보기
+	@Override
+	public GuestBookVO getGuestBookOneList(String idx) {
+		return guestBookDAO.getGuestBookOneList(idx);
+	}
+	
+	// 수정
 	@Override
 	public int getGuestBookUpdate(GuestBookVO gvo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return guestBookDAO.getGuestBookUpdate(gvo);
 	}
 
+	// 삭제
 	@Override
 	public int getGuestBookDelete(String idx) {
-		// TODO Auto-generated method stub
-		return 0;
+		return guestBookDAO.getGuestBookDelete(idx);
 	}
 }

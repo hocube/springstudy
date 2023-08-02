@@ -3,12 +3,31 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="guestbook">
+	<!-- 전체 리스트 -->
 	<select id="list" resultType="gvo">
 		select * from guestbook
 	</select>
 	
+	<!-- 방명록 쓰기 -->
 	<insert id="insert" parameterType="gvo">
-		insert into guestbook(name, subject, content, email, pwd, regdate)
-		values(#{name}, #{subject}, #{content}, #{email}, #{pwd}, SYSDATE())
+		insert into guestbook (name,subject,content,email,pwd,regdate)
+		values(#{name}, #{subject},#{content},#{email},#{pwd},sysdate())
 	</insert>
+	
+	<!-- 상세보기 -->
+	<select id="onelist" parameterType="String" resultType="gvo">
+		select * from guestbook where idx = #{idx}
+	</select>
+	
+	<!-- 수정 -->
+	<update id="update" parameterType="gvo" >
+		update guestbook
+		set name = #{name}, subject = #{subject}, content = #{content}, email = #{email}
+		where idx = #{idx}
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="delete" parameterType="String">
+		delete from guestbook where idx = #{idx}
+	</delete>
 </mapper>

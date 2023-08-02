@@ -171,6 +171,22 @@
     		<version>2.10.1</version>
 		</dependency>
       <!--db연동과 파일 업로드를위한 라이브러리들 끝. -->
+      <!-- security -->
+      <dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>5.3.13.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>5.3.13.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>5.3.13.RELEASE</version>
+		</dependency>
    </dependencies>
     <build>
         <plugins>
