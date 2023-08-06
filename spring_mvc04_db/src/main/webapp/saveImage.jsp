@@ -4,7 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	String realPath = "resources/upload";
+	String realPath = "resources/images";
 	MultipartRequest mr =
 			new MultipartRequest(request, realPath, 1024*1024*100, "utf-8", new DefaultFileRenamePolicy());
 	File file = mr.getFile("upload");

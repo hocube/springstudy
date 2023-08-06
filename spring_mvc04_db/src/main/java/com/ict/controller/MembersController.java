@@ -16,15 +16,6 @@ import com.ict.model.vo.MembersVO;
 public class MembersController {
 	@Autowired
 	private MembersService membersService;
-	
-	public MembersService getMembersService() {
-		return membersService;
-	}
-
-	public void setMembersService(MembersService membersService) {
-		this.membersService = membersService;
-	}
-	
 
 	@GetMapping("/members_list.do")
 	public ModelAndView getMembersList() {
@@ -41,6 +32,7 @@ public class MembersController {
 	
 	@PostMapping("/members_addMember.do")
 	public ModelAndView getMemberAdd(MembersVO mvo) {
+		// 리다이렉트
 		ModelAndView mv = new ModelAndView("redirect:/members_list.do");
 		int result = membersService.memberAdd(mvo);
 		return mv;

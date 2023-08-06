@@ -39,7 +39,8 @@
          return ;
       }
       
-      f.action="/members_addMember.do"
+      //f.action="/members_addMember.do"
+      f.action = "/member_add.do"
       f.submit();
    
    }
@@ -47,7 +48,6 @@
 </head>
 <body>
    <h2>회원가입</h2>
-   <!-- 자바스크립트 방법 -->
    <div>
       <form method="post">
          <table>
