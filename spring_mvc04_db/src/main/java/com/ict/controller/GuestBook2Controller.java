@@ -195,7 +195,7 @@ public class GuestBook2Controller {
 		if (!passwordEncoder.matches(cpwd, dpwd)) {
 			mv.setViewName("guestbook2/delete");
 			mv.addObject("pwchk", "fail");
-			mv.addObject("vo", vo);
+			mv.addObject("g2vo", vo); // // 'vo' 대신 'g2vo' 객체를 뷰로 다시 전송
 			return mv;
 		} else {
 			int result = guestBook2Service.getGuestBook2Delete(g2vo.getIdx());

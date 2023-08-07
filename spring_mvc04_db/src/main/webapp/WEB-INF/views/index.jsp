@@ -14,9 +14,8 @@
 			alert("비밀번호틀림");
 			return ;
 		}else if(loginChk == "ok") {
-			$("#login").css("display","none"); 
-			$("#login_ok").css("display", "block");
-			return ;
+			$("#login").css("display","none");      // 감추기
+			$("#login_ok").css("display", "block"); // 나타내기
 		}
 	});
 </script>	
@@ -33,7 +32,7 @@
 	function reg_add_go() {
 		location.href= "/member_reg.do";
 	}
-	function member_out_go() {
+	function member_logout_go() {
 		location.href= "/member_logout.do";
 	}
 	function go_bbs() {
