@@ -37,7 +37,7 @@ public class BBS_DAO {
 		return sqlSessionTemplate.insert("bbs.insert", bvo);
 	}
 	
-	// 수정
+	// 조회수 업데이트
 	public int getHitUpdate(String b_idx) {
 		return sqlSessionTemplate.update("bbs.hitup", b_idx);
 	}
@@ -52,5 +52,10 @@ public class BBS_DAO {
 	// 코멘트 삽입하기
 	public int getCommInsert(Comment_VO cvo) {
 		return sqlSessionTemplate.insert("bbs.cominsert", cvo);
+	}
+	
+	// 수정
+	public int bbsUpdate(BBS_VO bvo) {
+		return sqlSessionTemplate.update("bbs.update", bvo);
 	}
 }

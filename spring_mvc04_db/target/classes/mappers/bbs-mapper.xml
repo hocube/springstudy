@@ -33,6 +33,13 @@
 		insert into comment_t(writer, content, write_date, b_idx)
 		values(#{writer}, #{content}, sysdate(), #{b_idx})
 	</insert>
+	
+	<!-- 수정 -->
+	<update id="update" parameterType="bvo">
+		update bbs_t set subject=#{subject}, writer=#{writer}, content=#{content}, 
+		f_name=#{f_name} where b_idx = #{b_idx}
+	</update>
+	
 </mapper>
 
 

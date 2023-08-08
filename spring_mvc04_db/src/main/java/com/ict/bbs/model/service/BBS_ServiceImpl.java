@@ -56,4 +56,10 @@ public class BBS_ServiceImpl implements BBS_Service{
 	public int getCommInsert(Comment_VO cvo) {
 		return bBS_DAO.getCommInsert(cvo);
 	}
+
+	// 수정
+	@Override
+	public int bbsUpdate(BBS_VO bvo) {
+		return bBS_DAO.bbsUpdate(bvo);
+	}
 }

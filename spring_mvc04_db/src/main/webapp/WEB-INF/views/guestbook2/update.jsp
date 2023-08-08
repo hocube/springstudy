@@ -88,7 +88,6 @@
 			</table>
 		</form>
 	</div>
-
     	<script src="resources/js/summernote-lite.js"></script>
     	<script src="resources/js/lang/summernote-ko-KR.js"></script>
     	<script type="text/javascript">

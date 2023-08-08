@@ -27,4 +27,7 @@ public interface BBS_Service {
 	public List<Comment_VO> getCommList(String b_idx);
 	// 코멘트 삽입하기
 	public int getCommInsert(Comment_VO cvo);
+	
+	// 수정
+	public int bbsUpdate(BBS_VO bvo);
 }

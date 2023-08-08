@@ -52,7 +52,7 @@
 		f.submit();
 	}
 	function update_go(f) {
-		f.action = "";
+		f.action = "/bbs_edit_Form.do";
 		f.submit();
 	}
 	function delete_go(f) {
