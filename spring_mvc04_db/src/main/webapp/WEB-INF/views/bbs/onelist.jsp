@@ -16,25 +16,21 @@
 	    font-size:14px;
 	    
 	}
-	
 	#bbs table caption {
 	    font-size:20px;
 	    font-weight:bold;
 	    margin-bottom:10px;
 	}
-	
 	#bbs table th {
 	    text-align:center;
 	    border:1px solid black;
 	    padding:4px 10px;
 	}
-	
 	#bbs table td {
 	    text-align:left;
 	    border:1px solid black;
 	    padding:4px 10px;
 	}
-	
 	.no {width:15%}
 	.subject {width:30%}
 	.writer {width:20%}
@@ -42,7 +38,7 @@
 	.hit {width:15%}
 	.title{background:lightsteelblue}
 	.odd {background:silver}
-	
+
 	fieldset {
 	 width: 580px;
     }
@@ -52,15 +48,15 @@
 </style>
 <script type="text/javascript">
 	function list_go(f) {
-		f.action="/MyController?cmd=list";
+		f.action="/bbs_list.do";
 		f.submit();
 	}
 	function update_go(f) {
-		f.action = "/MyController?cmd=update";
+		f.action = "";
 		f.submit();
 	}
 	function delete_go(f) {
-		f.action = "/MyController?cmd=delete";
+		f.action = "";
 		f.submit();
 	}
 	
@@ -76,11 +72,11 @@
 			f.content.focus();
 			return;
 		}
-		f.action = "/MyController?cmd=c_write";
+		f.action = "/com_insert.do";
 		f.submit();
 	}
 	function comment_del(f) {
-		f.action = "/MyController?cmd=c_delete";
+		f.action = "";
 		f.submit();
 	}
 </script>
@@ -110,7 +106,8 @@
 							<td><b>첨부 파일 없음</b></td>
 						</c:when>
 						<c:otherwise>
-							<td><a href="/DownController?path=upload&f_name=${bvo.f_name}" target="_blank"><img  src="upload/${bvo.f_name}" style="80px"></a></td>
+							<td><a href="/DownController?path=upload&f_name=${bvo.f_name}" target="_blank">
+							<img  src="upload/${bvo.f_name}" style="80px"></a></td>
 						</c:otherwise>
 					</c:choose>
 				</tr>
@@ -160,8 +157,5 @@
 		 </div>
 		</c:forEach>
 	</div>
-	
-	
 </body>
 </html>
-

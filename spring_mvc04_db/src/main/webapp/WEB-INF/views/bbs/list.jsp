@@ -103,9 +103,9 @@ table tfoot ol.paging li a:hover {
 					<c:otherwise>
 						<c:forEach var="k" items="${bbs_list}" varStatus="vs">
 							<tr>
-								<td>${vs.count}</td>
-								<td><a href="">${k.subject}</a></td>
-								<td>${k.writer }</td>
+								<td>${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage + vs.index)}</td>
+								<td><a href="/bbs_onelist.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.subject}</a></td>
+								<td>${k.writer}</td>
 								<td>${k.write_date.substring(0,10)}</td>
 								<td>${k.hit}</td>
 							</tr>
@@ -113,11 +113,52 @@ table tfoot ol.paging li a:hover {
 					</c:otherwise>
 				</c:choose>
 			</tbody>
-			<!-- 페이지기법 -->
 			<tfoot>
 				<tr>
-					<td colspan="5">
-						<button onclick="write_go()">글쓰기</button>
+					<td colspan="4">
+						<ol class="paging">
+							<!-- 이전 버튼 -->
+							<c:choose>
+								<c:when test="${paging.beginBlock <= paging.pagePerBlock}">
+									<li class="disable">이전으로</li>
+								</c:when>
+								<c:otherwise>
+									<li><a href="/bbs_list.do?c_Page=${paging.beginBlock-paging.pagePerBlock}">이전으로</a></li>
+								</c:otherwise>
+							</c:choose>
+							<!-- 페이지 번호들 
+								for문으로 돌려서 번호블럭을 만들어주자. 
+								현재 페이지는 링크가 없고, 나머지 페이지는 링크처리 해야한다. 
+								그래야 해당 블럭의 페이지로 넘어가 해당 페이지에 포함된 게시글을 볼수있다.
+							-->
+							<c:forEach begin="${paging.beginBlock}" end="${paging.endBlock}" step="1" var="k">
+								<!-- 현재 페이지는 링크 X, 나머지 페이지는 해당 페이지로 이동하게 링크 처리 -->
+								<c:if test="${k == paging.nowPage}">
+									<!--현재페이지와 같으면  -->
+									<li class="now">${k}</li>
+								</c:if>
+								
+								<c:if test="${k != paging.nowPage}">
+									<li><a href="/bbs_list.do?cPage=${k}">${k}</a></li>
+									<!-- 현재페이지가 아니면 링크를 걸고, 해당페이지로 가면 리스트 화면이 보이게한다.  -->
+								</c:if>
+							</c:forEach>
+							<!-- 이후 버튼 -->	
+							<c:choose>
+								<c:when test="${paging.endBlock >= paging.totalPage}">
+									<li class="disable">다음으로</li>
+								</c:when>
+								<c:otherwise>
+									<li><a href="/bbs_list.do?cPage=${paging.beginBlock+paging.pagePerBlock}">다음으로</a></li>
+									<!--다음으로는 끝블럭보다, 전체페이지가 크다면 disable
+										그리고 +를 해주면된다.									
+									 -->
+								</c:otherwise>
+							</c:choose>
+						</ol>
+					</td>
+					<td>
+						<input type="button" value="글쓰기" onclick="write_go()">
 					</td>
 				</tr>
 			</tfoot>
