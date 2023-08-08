@@ -107,7 +107,7 @@
 						</c:when>
 						<c:otherwise>
 							<td><a href="/DownController?path=upload&f_name=${bvo.f_name}" target="_blank">
-							<img  src="upload/${bvo.f_name}" style="80px"></a></td>
+							<img  src="resources/images/${bvo.f_name}" style="80px"></a></td>
 						</c:otherwise>
 					</c:choose>
 				</tr>

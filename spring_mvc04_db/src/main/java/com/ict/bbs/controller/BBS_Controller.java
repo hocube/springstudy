@@ -200,7 +200,7 @@ public class BBS_Controller {
 		if(! passwordEncoder.matches(cpwd, dpwd)) {
 			mv.setViewName("bbs/update");
 			mv.addObject("pwchk", "fail");
-			mv.addObject("vo", vo);
+			mv.addObject("bvo", vo);
 			return mv;
 		}else {
 			String path = request.getSession().getServletContext().getRealPath("/resources/images");
@@ -215,7 +215,7 @@ public class BBS_Controller {
 					String f_name = uuid.toString() + "_" + bvo.getFile().getOriginalFilename();
 					bvo.setF_name(f_name);
 					
-					// 이미지 /resources/images 저장하기s
+					// 이미지 /resources/images 저장하기
 					byte[] in = bvo.getFile().getBytes();
 					File out = new File(path, f_name);
 					FileCopyUtils.copy(in, out);
