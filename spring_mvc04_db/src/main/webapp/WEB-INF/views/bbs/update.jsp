@@ -15,27 +15,22 @@
 	    border:1px solid black;
 	    border-collapse:collapse;
 	    font-size:14px;
-	    
 	}
-	
 	#bbs table caption {
 	    font-size:20px;
 	    font-weight:bold;
 	    margin-bottom:10px;
 	}
-	
 	#bbs table th {
 	    text-align:center;
 	    border:1px solid black;
 	    padding:4px 10px;
 	}
-	
 	#bbs table td {
 	    text-align:left;
 	    border:1px solid black;
 	    padding:4px 10px;
 	}
-	
 	.no {width:15%}
 	.subject {width:30%}
 	.writer {width:20%}
@@ -46,17 +41,18 @@
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
 <script type="text/javascript">
-	$(document).ready(function(){
-		var pwchk = "${pwchk}"
-   	 	if(pwchk == "fail"){
-		   alert("비밀번호 틀림");
-	   		return;
-   		}
-	});
+$(document).ready(function(){
+	var pwchk = "${pwchk}"
+    if(pwchk == "fail"){
+	   alert("비밀번호 틀림");
+	   return;
+   }
+});
 </script>
 <script type="text/javascript">
 	function update_ok(f) {
-		f.action="/bbs_edite.do";
+		// 유효성 검사
+		f.action="/bbs_update.do";
 		f.submit();
 	}
 

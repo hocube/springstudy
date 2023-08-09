@@ -45,7 +45,7 @@ public class BBS_DAO {
 	public BBS_VO getOneList(String b_idx) {
 		return sqlSessionTemplate.selectOne("bbs.onelist", b_idx);
 	}
-	// 코멘트
+	// 코멘트 삽입하기
 	public List<Comment_VO> getCommList(String b_idx) {
 		return sqlSessionTemplate.selectList("bbs.comlist", b_idx);
 	}
@@ -53,9 +53,18 @@ public class BBS_DAO {
 	public int getCommInsert(Comment_VO cvo) {
 		return sqlSessionTemplate.insert("bbs.cominsert", cvo);
 	}
+	// 코멘트 삭제하기
+	public int getCommDelete(String c_idx) {
+		return sqlSessionTemplate.delete("bbs.comdelete", c_idx);
+	}
 	
+	// 삭제
+	public int getDelete(String b_idx) {
+		return sqlSessionTemplate.update("bbs.delete", b_idx);
+	}
+
 	// 수정
-	public int bbsUpdate(BBS_VO bvo) {
+	public int getUpdate(BBS_VO bvo) {
 		return sqlSessionTemplate.update("bbs.update", bvo);
 	}
 }

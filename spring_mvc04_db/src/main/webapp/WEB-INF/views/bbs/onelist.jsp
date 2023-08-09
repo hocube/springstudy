@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 <style type="text/css">
 	#bbs table {
-	    width:580px;
+	    width:800px;
 	    margin:0 auto;
 	    margin-top:20px;
 	    border:1px solid black;
@@ -52,11 +52,11 @@
 		f.submit();
 	}
 	function update_go(f) {
-		f.action = "/bbs_edit_Form.do";
+		f.action = "/bbs_updateForm.do";
 		f.submit();
 	}
 	function delete_go(f) {
-		f.action = "";
+		f.action = "/bbs_deleteForm.do";
 		f.submit();
 	}
 	
@@ -76,7 +76,7 @@
 		f.submit();
 	}
 	function comment_del(f) {
-		f.action = "";
+		f.action = "/com_delete.do";
 		f.submit();
 	}
 </script>
@@ -106,7 +106,7 @@
 							<td><b>첨부 파일 없음</b></td>
 						</c:when>
 						<c:otherwise>
-							<td><a href="/DownController?path=upload&f_name=${bvo.f_name}" target="_blank">
+							<td><a href="down.do?f_name=${bvo.f_name}">
 							<img  src="resources/images/${bvo.f_name}" style="80px"></a></td>
 						</c:otherwise>
 					</c:choose>
@@ -115,6 +115,7 @@
 					<td colspan="2">
 						<input type="hidden" value="${bvo.b_idx}" name="b_idx">
 						<input type="hidden" value="${cPage}" name="cPage">
+						<%-- <input type="hidden" value="${bvo.pwd}" name="pwd"> --%>
 						<input type="button" value="수정" onclick="update_go(this.form)">
 						<input type="button" value="삭제" onclick="delete_go(this.form)">
 						<input type="button" value="목록" onclick="list_go(this.form)">
@@ -125,7 +126,7 @@
 	</form>
 	</div>
 	<%-- 댓글 입력 --%>
-	<div style="padding:50px; width:580px; margin: auto; ">
+	<div style="padding:50px; width:800px; margin: auto; ">
 		<form method="post">
 			<fieldset>
 				<p>이름 : <input type="text" name="writer" ></p>

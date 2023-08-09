@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 <style type="text/css">
 #bbs table {
-	width:580px;
+	width:700px;
 	margin:0 auto;
 	margin-top:20px;
 	border: 1px solid black;
@@ -28,11 +28,12 @@
 	padding: 4px 10px;
 }
 
-.no { width: 15% }
+.no { width: 10% }
 .subject { 	width: 30% }
 .writer {	width: 20% }
 .reg {	width: 20% }
-.hit {	width: 15% }
+.hit {	width: 10% }
+.commcount  {	width: 10% }
 .title {	background: lightsteelblue }
 .odd {	background: silver }
 
@@ -90,6 +91,7 @@ table tfoot ol.paging li a:hover {
 					<th class="subject">제목</th>
 					<th class="writer">글쓴이</th>
 					<th class="reg">날짜</th>
+					<th class="commcount">댓글수</th>
 					<th class="hit">조회수</th>
 				</tr>
 			</thead>
@@ -97,16 +99,24 @@ table tfoot ol.paging li a:hover {
 				<c:choose>
 					<c:when test="${empty bbs_list}">
 						<tr>
-							<td colspan="5"><h2>자료가 존재하지 않습니다.</h2></td>
+							<td colspan="6"><h2>자료가 존재하지 않습니다.</h2></td>
 						</tr>
 					</c:when>
 					<c:otherwise>
 						<c:forEach var="k" items="${bbs_list}" varStatus="vs">
 							<tr>
 								<td>${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage + vs.index)}</td>
-								<td><a href="/bbs_onelist.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.subject}</a></td>
+								<c:choose>
+									<c:when test="${k.status == 1}">
+										<td style="color: gray"> 삭제된 게시물 입니다. </td>
+									</c:when>
+									<c:otherwise>
+										<td><a href="/bbs_onelist.do?b_idx=${k.b_idx}&cPage=${paging.nowPage}">${k.subject}</a></td>
+									</c:otherwise>
+								</c:choose>
 								<td>${k.writer}</td>
 								<td>${k.write_date.substring(0,10)}</td>
+								<td>${k.commcount}</td>
 								<td>${k.hit}</td>
 							</tr>
 						</c:forEach>
@@ -115,7 +125,7 @@ table tfoot ol.paging li a:hover {
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="4">
+					<td colspan="5">
 						<ol class="paging">
 							<!-- 이전 버튼 -->
 							<c:choose>

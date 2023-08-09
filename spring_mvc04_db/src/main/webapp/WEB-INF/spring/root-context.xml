@@ -15,8 +15,9 @@
 		-->
 		<!-- 마리아 DB 연결 정보-->
 		<property name="driverClassName" value="org.mariadb.jdbc.Driver" />
-		<property name="url" value="jdbc:mariadb://localhost:3306/ictedu" />
-		<property name="username" value="jh" />
+		<!-- <property name="url" value="jdbc:mariadb://localhost:3306/ictedu" /> -->
+		<property name="url" value="jdbc:mariadb://3.27.108.150:3306/ictedu" />
+		<property name="username" value="pjh" />
 		<property name="password" value="1111" />
 	</bean>
 	

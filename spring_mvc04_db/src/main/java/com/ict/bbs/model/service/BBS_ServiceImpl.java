@@ -56,10 +56,22 @@ public class BBS_ServiceImpl implements BBS_Service{
 	public int getCommInsert(Comment_VO cvo) {
 		return bBS_DAO.getCommInsert(cvo);
 	}
+	// 코멘트 삭제
+	@Override
+	public int getCommDelete(String c_idx) {
+		return bBS_DAO.getCommDelete(c_idx);
+	}
+	
+	// 삭제
+	@Override
+	public int getDelete(String b_idx) {
+		return bBS_DAO.getDelete(b_idx);
+	}
 
 	// 수정
 	@Override
-	public int bbsUpdate(BBS_VO bvo) {
-		return bBS_DAO.bbsUpdate(bvo);
+	public int getUpdate(BBS_VO bvo) {
+		return bBS_DAO.getUpdate(bvo);
 	}
+
 }

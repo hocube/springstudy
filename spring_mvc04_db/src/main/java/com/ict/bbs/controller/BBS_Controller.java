@@ -1,10 +1,14 @@
 package com.ict.bbs.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.stream.events.Comment;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,6 +27,7 @@ import com.ict.bbs.model.service.BBS_Service;
 import com.ict.bbs.model.vo.BBS_VO;
 import com.ict.bbs.model.vo.Comment_VO;
 import com.ict.common.Paging;
+import com.ict.model.vo.GuestBook2VO;
 
 @Controller
 public class BBS_Controller {
@@ -43,7 +49,7 @@ public class BBS_Controller {
 
 		// 전체 게시물의 수
 		int count = bBs_Service.getTotalCount();
-		paging.setTotalRecord(count);
+		paging.setTotalRecord(count); 
 
 		// 전체 페이지의 수
 		if (paging.getTotalRecord() <= paging.getNumPerPage()) {
@@ -82,6 +88,9 @@ public class BBS_Controller {
 		}
 
 		List<BBS_VO> bbs_list = bBs_Service.getList(paging.getOffset(), paging.getNumPerPage());
+		
+		
+		
 		mv.addObject("bbs_list", bbs_list);
 		mv.addObject("paging", paging);
 		return mv;
@@ -168,65 +177,151 @@ public class BBS_Controller {
 	// 파라미터 cPage를 받아서 model에 cPage라는 이름으로 저장된다.
 	// 다음에 넘어갈 페이지에게 전달
 	@PostMapping("/com_insert.do")
-	public ModelAndView commentInsert(Comment_VO cvo,
-			@ModelAttribute("cPage")String cPage, @ModelAttribute("b_idx")String b_idx) {
+	public ModelAndView commentInsert(Comment_VO cvo, @ModelAttribute("cPage") String cPage,
+			@ModelAttribute("b_idx") String b_idx) {
 		ModelAndView mv = new ModelAndView("redirect:/bbs_onelist.do");
 		int result = bBs_Service.getCommInsert(cvo);
 		return mv;
 	}
 
+	// 댓글 삭제
+	@PostMapping("/com_delete.do")
+	public ModelAndView commentDelete(
+			// 필요한 파라미터값 3개 받았음.
+			@RequestParam("c_idx") String c_idx, @ModelAttribute("cPage") String cPage,
+			@ModelAttribute("b_idx") String b_idx) {
+		ModelAndView mv = new ModelAndView("redirect:/bbs_onelist.do");
+		int result = bBs_Service.getCommDelete(c_idx);
+		return mv;
+	}
+
+	// 삭제 폼
+	@PostMapping("/bbs_deleteForm.do")
+	public ModelAndView deleteForm(
+			@ModelAttribute("cPage") String cPage, 
+			@ModelAttribute("b_idx") String b_idx) {
+		ModelAndView mv = new ModelAndView("bbs/delete");
+		return mv;
+	}
+
+	// 삭제
+	@PostMapping("/bbs_delete.do")
+	public ModelAndView bbsDelete(
+			@RequestParam("pwd") String pwd, 
+			@ModelAttribute("cPage") String cPage,
+			@ModelAttribute("b_idx") String b_idx) {
+
+		ModelAndView mv = new ModelAndView("redirect:/bbs_list.do");
+
+		// 비밀번호가 맞는지 체크하기
+		// DB에서 암호 얻기
+		BBS_VO bvo = bBs_Service.getOneList(b_idx);
+		String dbpwd = bvo.getPwd(); // db 패스워드
+
+		// passwordEncoder.matches(암호화 되지 않은 것, 암호화 된 것)
+		if (!passwordEncoder.matches(pwd, dbpwd)) {
+			// post방식은 redirect 못 감.
+			// mv.setViewName("redirect:/bbs_deleteForm.do");
+			mv.setViewName("bbs/delete");
+			mv.addObject("pwchk", "fail");
+			return mv;
+		} else {
+			// 원글 삭제 시 상태값을 0 -> 1로 변경 시킨다.
+			int result = bBs_Service.getDelete(b_idx);
+			mv.setViewName("redirect:/bbs_list.do");
+			return mv;
+		}
+	}
+
 	// 수정 폼
-	@PostMapping("/bbs_edit_Form.do")
-	public ModelAndView bbsEdit_Form(String b_idx) {
+	@PostMapping("/bbs_updateForm.do")
+	public ModelAndView bbsUpdateForm(
+			@ModelAttribute("cPage") String cPage, 
+			@ModelAttribute("b_idx") String b_idx) {
 		ModelAndView mv = new ModelAndView("bbs/update");
+		// b_idx로 onelist 정보 가져오기
 		BBS_VO bvo = bBs_Service.getOneList(b_idx);
 		mv.addObject("bvo", bvo);
 		return mv;
 	}
 
 	// 수정
-	@PostMapping("/bbs_edite.do")
-	public ModelAndView bbsUpdate(BBS_VO bvo, HttpServletRequest request) {
+	@PostMapping("/bbs_update.do")
+	public ModelAndView bbsUpdate(
+			BBS_VO bvo, HttpServletRequest request, 
+			@ModelAttribute("cPage") String cPage,
+			@ModelAttribute("b_idx") String b_idx) {
+		
 		ModelAndView mv = new ModelAndView();
-		// 비밀번호가 맞는지 틀린지 검사하기. (비밀번호 암호화 되어있다)
-		// jsp에서 암호로 입력한 것
-		String cpwd = bvo.getPwd(); // 암호화 되지 않은 것.
-		
-		// db에서 암호 얻기
-		BBS_VO vo = bBs_Service.getOneList(bvo.getB_idx());
-		String dpwd = vo.getPwd(); // 암호화 된 것.
-		
+
+		// 비밀번호가 맞는지 체크하기
+		// DB에서 암호 얻기
+		BBS_VO bvo2 = bBs_Service.getOneList(b_idx);
+		String dbpwd = bvo2.getPwd(); // db 패스워드
+
 		// passwordEncoder.matches(암호화 되지 않은 것, 암호화 된 것)
-		if(! passwordEncoder.matches(cpwd, dpwd)) {
+		if (!passwordEncoder.matches(bvo.getPwd(), dbpwd)) {
+			// 파라미터 값 bvo로 받기 때문에 암호화 되지않은거 bvo.getPwd()로 받는다)
 			mv.setViewName("bbs/update");
 			mv.addObject("pwchk", "fail");
-			mv.addObject("bvo", vo);
+			mv.addObject("bvo", bvo);
+			bvo.setF_name(bvo.getOld_f_name());
+			
 			return mv;
-		}else {
-			String path = request.getSession().getServletContext().getRealPath("/resources/images");
+		} else {
 			try {
-				MultipartFile f_param = bvo.getFile();
-				String old_f_name = bvo.getOld_f_name();
-				
-				if(f_param.isEmpty()) {
-					bvo.setF_name(old_f_name);
-				}else {
+				String path = request.getSession().getServletContext().getRealPath("/resources/images");
+				MultipartFile file = bvo.getFile();
+				if (file.isEmpty()) {
+					bvo.setF_name(bvo.getOld_f_name());
+				} else {
+					// 같은 이름의 파일이 없도록 UUID 사용
 					UUID uuid = UUID.randomUUID();
 					String f_name = uuid.toString() + "_" + bvo.getFile().getOriginalFilename();
+					// DB에 저장
 					bvo.setF_name(f_name);
-					
-					// 이미지 /resources/images 저장하기
+
+					// 이미지 저장
 					byte[] in = bvo.getFile().getBytes();
 					File out = new File(path, f_name);
 					FileCopyUtils.copy(in, out);
 				}
-				int result = bBs_Service.bbsUpdate(bvo);
-				
-				mv.setViewName("redirect:/bbs_onelist.do?b_idx=" + bvo.getB_idx());
-				return mv;
+				// 패스워드 암호화
+				// 한줄로 바꿔서 쓸 수도 있음.
+				bvo.setPwd(passwordEncoder.encode(bvo.getPwd()));
+				int res = bBs_Service.getUpdate(bvo);
+				if (res > 0) { // 성공
+					mv.setViewName("redirect:/bbs_onelist.do");
+					return mv;
+				} else { // 실패
+					return null;
+				}
 			} catch (Exception e) {
+				System.out.println(e);
+				return null;
 			}
-			return null;
+		}
+	}
+	
+	// 다운로드
+	@GetMapping("/down.do")
+	public void down(
+			@RequestParam("f_name")String f_name, 
+			HttpServletRequest request,
+			HttpServletResponse response) {
+		try {
+			String path = request.getSession().getServletContext().getRealPath("/resources/images/"+f_name);
+			String r_path = URLEncoder.encode(path,"utf-8");
+			response.setContentType("application/x-msdownload");
+			response.setHeader("Content-Disposition", "attachment; filename="+r_path);
+			// 여기 까진 모양만 나오고 실제 다운은 안됨.
+			// 실제 다운로드 하려면 밑에를 해야함.
+			File file = new File(new String(path.getBytes()));
+			FileInputStream in = new FileInputStream(file);
+			OutputStream out = response.getOutputStream();
+			FileCopyUtils.copy(in, out);
+		} catch (Exception e) {
+			System.out.println(e);
 		}
 	}
 }

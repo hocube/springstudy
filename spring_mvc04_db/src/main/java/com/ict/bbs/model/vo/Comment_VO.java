@@ -2,7 +2,8 @@ package com.ict.bbs.model.vo;
 
 public class Comment_VO {
 	private String c_idx, writer, content, write_date, b_idx;
-
+	
+	
 	public String getC_idx() {
 		return c_idx;
 	}
