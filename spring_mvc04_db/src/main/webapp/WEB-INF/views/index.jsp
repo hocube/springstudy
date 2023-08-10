@@ -38,6 +38,9 @@
 	function go_bbs() {
 		location.href= "/bbs_list.do";
 	}
+	function go_board() {
+		location.href= "/board_list.do";
+	}
 	
 </script>
 </head>
@@ -46,8 +49,7 @@
 	<button onclick="go_guestbook()">GuestBook</button>
 	<button onclick="go_guestbook2()">GuestBook2</button>
 	<button onclick="go_bbs()">BBS</button>
-	<br><br><br><br>
-	
+	<button onclick="go_board()">Board</button>
 	<hr>
 	
 	<!-- 
@@ -61,7 +63,7 @@
 		</form>	
 	</div>
 	<div id="login_ok" style="display:none;">
-		<h2>${mvo.m_id }님 로그인 성공</h2>
+		<h2>${mvo.m_id}님 로그인 성공</h2>
 		<button onclick="member_logout_go()">로그아웃</button>
 	</div>
 	<div id="btns" style="margin: 30px;">

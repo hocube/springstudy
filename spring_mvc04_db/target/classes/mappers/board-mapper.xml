@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+	<!-- 조회수 -->
+	<select id="count" resultType="int">
+		select count(*) from board
+	</select>
+
+	<!-- 전체보기 -->
+	<select id="list" parameterType="Map" resultType="bv">
+	 select * from board order by idx desc, lev asc   limit #{limit} offset #{offset}
+	</select>
+	
+	<!-- 원글 삽입 -->
+	<insert id="insert" parameterType="bv">
+		<selectKey keyProperty="groups" resultType="String" order="BEFORE">
+			SELECT (IFNULL(MAX(idx),0)+1) as groups FROM board
+		</selectKey>
+		insert into board(writer, title, content, pwd, hit, groups, step, lev, regdate, f_name)
+		values(#{writer},#{title},#{content},#{pwd},0,#{groups},0,0,sysdate(),#{f_name})
+	</insert>
+	
+	<!-- 상세보기 -->
+	<update id="hitup" parameterType="String">
+		update board set hit = hit +1 where idx = #{idx}
+	</update>
+	<select id="onelist" parameterType="String" resultType="bv">
+		select * from board where idx = #{idx}
+	</select>
+	
+</mapper>
