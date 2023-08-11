@@ -1,6 +1,7 @@
 package com.ict.board.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,5 +41,15 @@ public class Board_ServiceImpl implements Board_Service{
 	@Override
 	public Board_VO getOneList(String idx) {
 		return board_DAO.getOneList(idx);
+	}
+	
+	@Override
+	public int getLevUpdate(Map<String, Integer> map) {
+		return board_DAO.getLevUpdate(map);
+	}
+	
+	@Override
+	public int getAnsInsert(Board_VO bv) {
+		return board_DAO.getAnsInsert(bv);
 	}
 }

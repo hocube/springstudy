@@ -13,8 +13,7 @@
 	    margin-top:20px;
 	    border:1px solid black;
 	    border-collapse:collapse;
-	    font-size:14px;
-	    
+	    font-size:14px;  
 	}
 	#bbs table caption {
 	    font-size:20px;
@@ -60,23 +59,8 @@
 		f.submit();
 	}
 	
-	function comment_go(f) {
-		 // 유효성 검사
-		if(f.writer.value.trim().length <=0){
-			alert("이름을 입력해 주세요");
-			f.writer.focus();
-			return;
-		}
-		if(f.content.value.trim().length <=0){
-			alert("내용을 입력해 주세요");
-			f.content.focus();
-			return;
-		}
-		f.action = "";
-		f.submit();
-	}
-	function comment_del(f) {
-		f.action = "";
+	function ans_write(f) {
+		f.action = "/board_ans_insertForm.do";
 		f.submit();
 	}
 </script>
@@ -106,7 +90,7 @@
 							<td><b>첨부 파일 없음</b></td>
 						</c:when>
 						<c:otherwise>
-							<td><a href="down.do?f_name=${bv.f_name}">
+							<td><a href="/board_down.do?f_name=${bv.f_name}">
 							<img  src="resources/images/${bv.f_name}" style="80px"></a></td>
 						</c:otherwise>
 					</c:choose>
@@ -119,44 +103,12 @@
 						<input type="button" value="수정" onclick="update_go(this.form)">
 						<input type="button" value="삭제" onclick="delete_go(this.form)">
 						<input type="button" value="목록" onclick="list_go(this.form)">
+						<input type="button" value="답글" onclick="ans_write(this.form)">
 					</td>
 				</tr>
 			</tbody>
 		</table>
 	</form>
-	</div>
-	<%-- 댓글 입력 --%>
-	<div style="padding:50px; width:800px; margin: auto; ">
-		<form method="post">
-			<fieldset>
-				<p>이름 : <input type="text" name="writer" ></p>
-				<p>내용 : <br>
-					<textarea rows="4" cols="40" name="content"></textarea>
-				 </p>
-				 <input type="button" value="댓글저장" onclick="comment_go(this.form)">
-				 <input type="hidden" name="idx" value="${bv.idx}">
-				 <input type="hidden" name="cPage" value="${cPage}">
-			 </fieldset>
-		</form>
-	</div>
-	<br><br><br>
-	
-	<%-- 댓글 출력 --%>
-	<div style="display: table;" >
-		<c:forEach var="k" items="${c_list}">
-		 <div style="border: 1px solid #cc00cc; width: 400px; margin: 20px; padding: 20px;">
-		 	<form method="post">
-		 		<p>이름 : ${k.writer}</p>
-		 		<p>내용 : ${k.content }</p>
-		 		<p>날짜 : ${k.write_date.substring(0,10)}</p>
-		 		<%-- 실제로는 로그인 성공해야 지만 삭제번트이 보여야 한다. --%>
-		 		<input type="button" value="댓글삭제" onclick="comment_del(this.form)">
-		 		<input type="hidden" value="${k.c_idx}" name="c_idx">
-		 		<input type="hidden" value="${k.idx}" name="idx">
-		 		<input type="hidden" name="cPage" value="${cPage}">
-		 	</form>
-		 </div>
-		</c:forEach>
 	</div>
 </body>
 </html>

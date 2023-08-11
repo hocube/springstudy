@@ -1,6 +1,7 @@
 package com.ict.bbs.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.ict.bbs.model.dao.BBS_DAO;
 import com.ict.bbs.model.vo.BBS_VO;
 import com.ict.bbs.model.vo.Comment_VO;
+import com.ict.board.model.vo.Board_VO;
 
 @Service
 public class BBS_ServiceImpl implements BBS_Service{
@@ -73,5 +75,4 @@ public class BBS_ServiceImpl implements BBS_Service{
 	public int getUpdate(BBS_VO bvo) {
 		return bBS_DAO.getUpdate(bvo);
 	}
-
 }

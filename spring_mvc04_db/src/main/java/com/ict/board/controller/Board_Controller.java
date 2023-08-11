@@ -1,10 +1,16 @@
 package com.ict.board.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,6 +20,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.method.support.ModelAndViewContainer;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -93,6 +101,7 @@ public class Board_Controller {
 
 		ModelAndView mv = new ModelAndView("redirect:/board_list.do");
 		try {
+			// 올릴때는 폴더이름만 써줘도 됨.
 			String path = request.getSession().getServletContext().getRealPath("/resources/images");
 			MultipartFile file = bv.getFile();
 			// 첨부파일이 있을 수도 있고 없을 수도 있기 때문에 if로 처리한다.
@@ -146,5 +155,100 @@ public class Board_Controller {
 		// 파라미터로 했기 때문에 안써도 된다.
 		// mv.addObject("cPage", cPage);
 		return mv;
+	}
+	
+	// 첨부파일 다운로드
+	// a링크 걸린거면 get방식으로.
+	// 다운로드니깐 void. ModelAndView 아님
+	@GetMapping("/board_down.do")
+	public void boarDown(
+			@RequestParam("f_name")String f_name,
+			HttpServletRequest request, 
+			HttpServletResponse response) {
+		try {
+			// 다운로드는 폴더와 + 다운로드 해야할 파일 이름까지 써줘야함.
+			String path = request.getSession().getServletContext().getRealPath("/resources/images/" + f_name);
+			String r_path = URLEncoder.encode(path,"utf-8");
+			response.setContentType("application/x-msdownload");
+			response.setHeader("Content-Disposition", "attachment; filename= "+r_path);
+			// 여기까지 하면 브라우저 모양은 성공
+			
+			File file = new File(new String(path.getBytes()));
+			FileInputStream in = new FileInputStream(file);
+			OutputStream out = response.getOutputStream();
+			FileCopyUtils.copy(in, out);
+		} catch (Exception e) {
+		}
+	}
+	
+	// 덧글 폼
+ 	@PostMapping("/board_ans_insertForm.do")
+	public ModelAndView boardAnsInsertForm(@ModelAttribute("cPage")String cPage,
+			@ModelAttribute("idx")String idx) {
+		return new ModelAndView("board/board_ans_write");	
+	}
+	
+ 	// 덧글 삽입
+	@PostMapping("/board_ans_insert.do")
+	public ModelAndView boardAnsInsert(@ModelAttribute("cPage")String cPage,
+			@ModelAttribute("idx")String idx,
+			Board_VO bv, HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("redirect:/board_list.do");
+		// 여기서부터 핵심!!!!!
+		try {
+			// 상세보기에서 groups, step, lev를 가져온다.
+			Board_VO bvo = board_Service.getOneList(idx);
+			
+			int groups = Integer.parseInt(bvo.getGroups());
+			int step = Integer.parseInt(bvo.getStep());
+			int lev = Integer.parseInt(bvo.getLev());
+			
+			// step, lev를 하나씩 올리자(증가) 
+			step ++;
+			lev ++;
+			
+			// DB에 groups, lev를 업데이트하자
+			// ★groups와 같은 원글을 찾아서 lev이 같거나 크면 lev을 증가시키자★
+			Map<String, Integer> map = new HashMap<String, Integer>();
+			map.put("groups", groups);
+			map.put("lev", lev);
+			
+			int result = board_Service.getLevUpdate(map); 
+			
+			// 업데이트 이후부터는 댓글 쓴게 필요하니깐 bv를 가져와야 한다.
+			bv.setGroups(String.valueOf(groups));
+			bv.setStep(String.valueOf(step));
+			bv.setLev(String.valueOf(lev));
+			
+			// 첨부파일 처리
+			String path = request.getSession().getServletContext().getRealPath("/resources/images");
+			MultipartFile file = bv.getFile();
+			// 첨부파일이 있을 수도 있고 없을 수도 있기 때문에 if로 처리한다.
+			// 무조건 있어야 하면 if를 안 하면 된다.
+			// 만약 프로필 첨부파일을 안 넣었을 때 기본 프로필 사진을 제공할거면 여기다 넣어줘도 된다.
+			if (file.isEmpty()) {
+				bv.setF_name("");
+			} else {
+				// 같은 이름 없도록 UUID사용
+				UUID uuid = UUID.randomUUID();
+				String f_name = uuid.toString() + "_" + bv.getFile().getOriginalFilename();
+				bv.setF_name(f_name);
+
+				// 이미지 저장
+				byte[] in = bv.getFile().getBytes();
+				File out = new File(path, f_name);
+				FileCopyUtils.copy(in, out);
+			}
+
+			// 패스워드 암호화
+			bv.setPwd(passwordEncoder.encode(bv.getPwd()));
+			// 삽입
+			int res = board_Service.getAnsInsert(bv);
+			
+			return mv;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
 	}
 }

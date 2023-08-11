@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ict.bbs.model.vo.BBS_VO;
 import com.ict.bbs.model.vo.Comment_VO;
+import com.ict.board.model.vo.Board_VO;
 
 @Repository
 public class BBS_DAO {

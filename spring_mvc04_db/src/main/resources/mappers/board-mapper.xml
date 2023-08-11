@@ -10,7 +10,7 @@
 
 	<!-- 전체보기 -->
 	<select id="list" parameterType="Map" resultType="bv">
-	 select * from board order by idx desc, lev asc   limit #{limit} offset #{offset}
+	 select * from board order by groups desc, lev asc   limit #{limit} offset #{offset}
 	</select>
 	
 	<!-- 원글 삽입 -->
@@ -29,5 +29,16 @@
 	<select id="onelist" parameterType="String" resultType="bv">
 		select * from board where idx = #{idx}
 	</select>
+	
+	<!-- levup -->
+	<update id="levupdate" parameterType="Map">
+		update board set lev = lev+1 where groups = #{groups} and lev >= #{lev}
+	</update>
+	
+	<!-- ansinsert -->
+	<insert id="ansinsert" parameterType="bv">
+		insert into board(writer, title, content, pwd, hit, groups, step, lev, regdate, f_name)
+		values(#{writer},#{title},#{content},#{pwd},0,#{groups},#{step},#{lev},sysdate(),#{f_name})
+	</insert>
 	
 </mapper>

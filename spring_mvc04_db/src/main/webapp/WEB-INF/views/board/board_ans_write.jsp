@@ -66,7 +66,8 @@
 			f.pwd.focus();
 			return;
 		}
-		f.action="/board_insert.do";
+		
+		f.action="/board_ans_insert.do";
 		f.submit();
 	}
 	function list_go(f) {
@@ -104,9 +105,11 @@
 				</tr>
 				<tr>
 					<td colspan="2" style="text-align: center;">
-						<input type="button" value="보내기" onclick="sendData(this.form)"/>
+						<input type="button" value="답글입력" onclick="sendData(this.form)"/>
 						<input type="reset" value="다시"/>
 						<input type="button" value="목록" onclick="list_go(this.form)"/>
+						<input type="hidden" name="cPage" value="${cPage}">
+						<input type="hidden" name="idx" value="${idx}">
 					</td>
 				</tr>
 			</tbody>

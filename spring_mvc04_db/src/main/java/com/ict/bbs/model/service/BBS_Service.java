@@ -1,9 +1,11 @@
 package com.ict.bbs.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ict.bbs.model.vo.BBS_VO;
 import com.ict.bbs.model.vo.Comment_VO;
+import com.ict.board.model.vo.Board_VO;
 
 public interface BBS_Service {
 	
@@ -33,7 +35,6 @@ public interface BBS_Service {
 	//원글 삭제
 	public int getDelete(String b_idx);
 
-	
 	// 수정
 	public int getUpdate(BBS_VO bvo);
 }

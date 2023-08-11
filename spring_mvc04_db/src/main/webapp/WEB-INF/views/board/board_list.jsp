@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 <style type="text/css">
 #bbs table {
-	width:580px;
+	width:800px;
 	margin:0 auto;
 	margin-top:20px;
 	border: 1px solid black;
@@ -111,7 +111,13 @@ table tfoot ol.paging li a:hover {
 									<c:otherwise>
 									</c:otherwise>
 								</c:choose> --%>
-								<td><a href="/board_onelist.do?idx=${k.idx}&cPage=${paging.nowPage}">${k.title}</a></td>
+								<td style="text-align: left; padding-left:20px;">
+								<!-- step만큼 들여쓰기 하자 -->
+									<c:forEach begin="1" end="${k.step}">			
+										&nbsp;[Re]					
+									</c:forEach>
+										<a href="/board_onelist.do?idx=${k.idx}&cPage=${paging.nowPage}">${k.title}</a>
+								</td>
 								<td>${k.writer}</td>
 								<td>${k.regdate.substring(0,10)}</td>
 								<td>${k.hit}</td>

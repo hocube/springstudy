@@ -41,4 +41,12 @@ public class Board_DAO {
 	public Board_VO getOneList(String idx) {
 		return sqlSessionTemplate.selectOne("board.onelist", idx);
 	}
+	
+	public int getLevUpdate(Map<String, Integer> map) {
+		return sqlSessionTemplate.update("board.levupdate", map);
+	}
+	
+	public int getAnsInsert(Board_VO bv) {
+		return sqlSessionTemplate.insert("board.ansinsert", bv);
+	}
 }
