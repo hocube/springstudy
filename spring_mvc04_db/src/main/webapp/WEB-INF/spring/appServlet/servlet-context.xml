@@ -34,6 +34,9 @@
 		<interceptor>
 			<mapping path="/bbs_list.do"/>
 			<mapping path="/board_ans_insertForm.do"/>
+			<mapping path="/shop_addCart.do"/>
+			<mapping path="/shop_showCart.do"/>
+			
 			<beans:ref bean="log_inter" />
 		</interceptor>
 	</interceptors>

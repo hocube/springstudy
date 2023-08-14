@@ -49,4 +49,9 @@ public class Board_DAO {
 	public int getAnsInsert(Board_VO bv) {
 		return sqlSessionTemplate.insert("board.ansinsert", bv);
 	}
+	
+	// 삭제
+	public int getDelete(String idx) {
+		return sqlSessionTemplate.update("board.delete", idx);
+	}
 }

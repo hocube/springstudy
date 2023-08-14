@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="shop">
+
+	<!-- 리스트 보기 -->
+	<select id="list" parameterType="String" resultType="svo">
+		select * from shop_t where category = #{category}
+	</select>
+	
+	<!-- 상세보기 -->
+	<select id="onelist" parameterType="String" resultType="svo">
+		select * from shop_t where idx = #{idx}
+	</select>
+	
+	<!-- 장바구니 onelist -->
+	<select id="cartonelist" parameterType="Map" resultType="cartVO">
+		select * from cart where m_id = #{m_id} and p_num = #{p_num}
+	</select>
+	
+	<!-- 장바구니 추가 -->
+	<insert id="cartinsert">
+		insert into cart(p_num, p_name, p_price, p_saleprice, p_su, m_id)
+		values(#{p_num}, #{p_name}, #{p_price}, #{p_saleprice}, 1, #{m_id})
+	</insert>
+	
+	<!-- 장바구니 업데이트 -->
+	<update id="cartupdate">
+		update cart set p_su = p_su + 1 where m_id = #{m_id} and p_num = #{p_num}
+	</update>
+	
+	<!-- 장바구니 보기 -->
+	<select id="cartlist" parameterType="String" resultType="cartVO">
+		select * from cart where m_id = #{m_id}
+	</select>
+	
+	<update id="cartedit" parameterType="cartVO">
+		update cart set p_su = #{p_su} where m_id = #{m_id} and p_num = #{p_num}
+	</update>
+	
+	<delete id="cartdelete" parameterType="String">
+		delete from cart where idx = #{idx}
+	</delete>
+	
+	<insert id="productinsert" parameterType="svo">
+		insert into shop_t(category, p_num, p_name, p_company, 
+		p_price, p_saleprice, p_image_s, p_image_l, p_content, p_date)
+		values(#{category}, #{p_num}, #{p_name}, #{p_company}, 
+		#{p_price}, #{p_saleprice}, #{p_image_s}, #{p_image_l}, #{p_content}, sysdate())
+	</insert>
+</mapper>

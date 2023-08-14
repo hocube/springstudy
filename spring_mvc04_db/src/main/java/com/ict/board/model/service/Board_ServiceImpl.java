@@ -52,4 +52,9 @@ public class Board_ServiceImpl implements Board_Service{
 	public int getAnsInsert(Board_VO bv) {
 		return board_DAO.getAnsInsert(bv);
 	}
+	
+	// 삭제
+	public int getDelete(String idx) {
+		return board_DAO.getDelete(idx);
+	}
 }

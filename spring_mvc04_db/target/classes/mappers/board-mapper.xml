@@ -41,4 +41,9 @@
 		values(#{writer},#{title},#{content},#{pwd},0,#{groups},#{step},#{lev},sysdate(),#{f_name})
 	</insert>
 	
+	<!-- 삭제 -->
+	<update id="delete" parameterType="String">
+		update board set status = 1 where idx = #{idx}
+	</update>
+	
 </mapper>

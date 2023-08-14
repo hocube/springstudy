@@ -61,6 +61,11 @@ public class MemberController {
 		}else {
 			session.setAttribute("mvo", mvo);
 			session.setAttribute("loginChk", "ok");
+			// 관리자인지 사용자인지 판별할 수있어야 함.
+			// admin 성공 시
+			if(mvo.getM_id().equals("admin")) {
+				session.setAttribute("admin", "ok");
+			}
 			return mv;
 		}
 	}
@@ -71,6 +76,7 @@ public class MemberController {
 		// session.invalidate();
 		session.removeAttribute("mvo");
 		session.removeAttribute("loginChk");
+		session.removeAttribute("admin");
 		return new ModelAndView("redirect:/");
 	}
 }

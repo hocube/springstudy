@@ -104,21 +104,21 @@ table tfoot ol.paging li a:hover {
 						<c:forEach var="k" items="${board_list}" varStatus="vs">
 							<tr>
 								<td>${paging.totalRecord - ((paging.nowPage-1)*paging.numPerPage + vs.index)}</td>
-								<%-- <c:choose>
+								<c:choose>
 									<c:when test="${k.status == 1}">
-										<td style="color: gray"> 삭제된 게시물 입니다. </td>
+										<td style="color: gray; text-align: left; padding-left: 20px;"> 삭제된 게시물 입니다. </td>
 									</c:when>
 									<c:otherwise>
+										<td style="text-align: left; padding-left: 20px;">
+										<c:forEach begin="1" end="${k.step }">
+										<!--step만큼 들여쓰기  -->
+											&nbsp;[Re]
+										</c:forEach>
+											<a href="/board_onelist.do?idx=${k.idx}&cPage=${paging.nowPage}">${k.title}</a>
+										</td>
 									</c:otherwise>
-								</c:choose> --%>
-								<td style="text-align: left; padding-left:20px;">
-								<!-- step만큼 들여쓰기 하자 -->
-									<c:forEach begin="1" end="${k.step}">			
-										&nbsp;[Re]					
-									</c:forEach>
-										<a href="/board_onelist.do?idx=${k.idx}&cPage=${paging.nowPage}">${k.title}</a>
-								</td>
-								<td>${k.writer}</td>
+								</c:choose>
+								<td>${k.writer }</td>
 								<td>${k.regdate.substring(0,10)}</td>
 								<td>${k.hit}</td>
 							</tr>

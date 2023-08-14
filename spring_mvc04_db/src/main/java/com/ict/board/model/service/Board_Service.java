@@ -23,7 +23,10 @@ public interface Board_Service {
 	Board_VO getOneList(String idx);
 	
 	// lev 업데이트
-		int getLevUpdate(Map<String, Integer> map); 
-		// 댓글 입력
-		int getAnsInsert(Board_VO bv);
+	int getLevUpdate(Map<String, Integer> map); 
+	// 댓글 입력
+	int getAnsInsert(Board_VO bv);
+	
+	// 삭제
+	int getDelete(String idx);
 }

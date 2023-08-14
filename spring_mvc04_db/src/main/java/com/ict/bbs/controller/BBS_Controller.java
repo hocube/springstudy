@@ -177,7 +177,9 @@ public class BBS_Controller {
 	// 파라미터 cPage를 받아서 model에 cPage라는 이름으로 저장된다.
 	// 다음에 넘어갈 페이지에게 전달
 	@PostMapping("/com_insert.do")
-	public ModelAndView commentInsert(Comment_VO cvo, @ModelAttribute("cPage") String cPage,
+	public ModelAndView commentInsert(
+			Comment_VO cvo, 
+			@ModelAttribute("cPage") String cPage,
 			@ModelAttribute("b_idx") String b_idx) {
 		ModelAndView mv = new ModelAndView("redirect:/bbs_onelist.do");
 		int result = bBs_Service.getCommInsert(cvo);
@@ -188,7 +190,8 @@ public class BBS_Controller {
 	@PostMapping("/com_delete.do")
 	public ModelAndView commentDelete(
 			// 필요한 파라미터값 3개 받았음.
-			@RequestParam("c_idx") String c_idx, @ModelAttribute("cPage") String cPage,
+			@RequestParam("c_idx") String c_idx, 
+			@ModelAttribute("cPage") String cPage,
 			@ModelAttribute("b_idx") String b_idx) {
 		ModelAndView mv = new ModelAndView("redirect:/bbs_onelist.do");
 		int result = bBs_Service.getCommDelete(c_idx);

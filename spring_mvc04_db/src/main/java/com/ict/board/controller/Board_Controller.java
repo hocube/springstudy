@@ -251,4 +251,39 @@ public class Board_Controller {
 		}
 		return null;
 	}
+	
+	// 삭제 폼
+	@PostMapping("/board_deleteForm.do")
+	public ModelAndView deleteForm(
+			@ModelAttribute("cPage")String cPage,
+			@ModelAttribute("idx")String idx) {
+		ModelAndView mv = new ModelAndView("board/board_delete");
+		return mv;
+	}
+	
+	// 삭제
+	@PostMapping("/board_delete.do")
+	public ModelAndView boardDelete(
+			@RequestParam("pwd") String pwd,
+			@ModelAttribute("cPage")String cPage,
+			@ModelAttribute("idx")String idx) {
+		ModelAndView mv = new ModelAndView("redirect:/board_list.do");
+		
+		// 비밀번호 맞는지 체크
+		// DB에서 암호 얻기
+		Board_VO bv = board_Service.getOneList(idx);
+		String dbpwd = bv.getPwd(); //db 패스워드
+		
+		// passwordEncoder.matches(암호화 되지 않은 것, 암호화 된 것)
+		if(! passwordEncoder.matches(pwd, dbpwd)) {
+			mv.setViewName("board/board_delete");
+			mv.addObject("pwchk", "fail");
+			return mv;
+		}else {
+			// 원글 삭제시 상태값을 0 -> 1로 변경시킨다.
+			int result = board_Service.getDelete(idx);
+			mv.setViewName("redirect:/board_list.do");
+			return mv;
+		}
+	}
 }
