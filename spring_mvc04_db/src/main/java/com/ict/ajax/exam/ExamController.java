@@ -12,6 +12,9 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.jdom2.input.SAXBuilder;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -106,4 +109,53 @@ public class ExamController {
 		}
 		return null;
 	}
+
+	@RequestMapping("/json_go.do")
+	public ModelAndView getJson_go() {
+		ModelAndView mv = new ModelAndView("result2");
+		StringBuffer sb = new StringBuffer();
+		BufferedReader br = null;
+		try {
+			URL url = new URL("https://raw.githubusercontent.com/paullabkorea/coronaVaccinationStatus/main/data/data.json");
+			URLConnection conn = url.openConnection();
+			br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
+			String msg = "";
+			while ((msg = br.readLine()) != null) {
+				sb.append(msg);
+			}
+			// InputSource in = new InputSource(new StringReader(sb.toString()));
+			
+			JSONParser jsonParser = new JSONParser();
+			
+			// JSONObject {"키" : "값","키" : "값","키" : "값"}, 
+			//            {"키" : [{"키" : "값","키" : "값","키" : "값"}, {"키" : "값","키" : "값","키" : "값"}]} 
+			
+			// 키가 존재하면 
+			//JSONObject jObject = (JSONObject) jsonParser.parse(sb.toString());
+			
+			// 배열로 시작하면서 키가 없는 경우 : [{"키" : "값","키" : "값","키" : "값"}, {"키" : "값","키" : "값","키" : "값"}]
+			JSONArray arr = (JSONArray)jsonParser.parse(sb.toString());
+			// System.out.println("arr : " + arr.size());
+			
+			List<JSON_VO> list = new ArrayList<JSON_VO>();
+			for (int i = 0; i < arr.size(); i++) {
+				JSONObject jobt = (JSONObject)arr.get(i);
+				String city = (String) jobt.get("시·도별(1)");
+				long totalcount = (long) jobt.get("총인구 (명)");
+				long firstcount = (long) jobt.get("1차 접종 누계");
+				double firstpersent = (double) jobt.get("1차 접종 퍼센트");
+				long secondcount = (long) jobt.get("2차 접종 누계");
+				double secondpersent = (double) jobt.get("2차 접종 퍼센트");
+				
+				JSON_VO jvo = new JSON_VO(city, totalcount, firstcount, secondcount, firstpersent, secondpersent);
+				list.add(jvo);
+			}
+			mv.addObject("list", list);
+			return mv;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	
 }
